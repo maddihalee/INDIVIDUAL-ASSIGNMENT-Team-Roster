@@ -2,8 +2,8 @@ import { clientCredentials } from '../utils/client';
 
 const dbUrl = clientCredentials.databaseURL;
 
-const getMembers = (uid) => new Promise((resolve, reject) => {
-  fetch(`${dbUrl}/members.json?orderBy="uid"&equalTo="${uid}"`, {
+const getMembers = () => new Promise((resolve, reject) => {
+  fetch(`${dbUrl}/members.json`, {
     method: 'GET',
     headers: {
       'Content-Type': 'application/json',
@@ -53,16 +53,7 @@ const createMember = (payload) => new Promise((resolve, reject) => {
     body: JSON.stringify(payload),
   })
     .then((response) => response.json())
-    .then((data) => {
-      const setCode = { firebaseKey: data.name };
-      fetch(`${dbUrl}/members/${setCode.firebaseKey}.json`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(setCode),
-      }).then(resolve);
-    })
+    .then((data) => resolve(data))
     .catch(reject);
 });
 

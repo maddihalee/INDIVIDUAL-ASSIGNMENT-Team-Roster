@@ -7,7 +7,7 @@ import { deleteMembers } from '../api/memberData';
 export default function MemberCard({ member, onUpdate }) {
   const deleteThisMember = () => {
     if (window.confirm(`Delete ${member.player_name}?`)) {
-      deleteMembers(member.firebaseKey).then(() => onUpdate);
+      deleteMembers(member.firebaseKey).then(() => onUpdate());
     }
   };
 
@@ -21,7 +21,7 @@ export default function MemberCard({ member, onUpdate }) {
           <Link href={`/team/${member.firebaseKey}`} passHref>
             <Button variant="primary" className="m-2">VIEW</Button>
           </Link>
-          <Link href={`/router/${member.firebaseKey}`} passHref>
+          <Link href={`/roster/${member.firebaseKey}`} passHref>
             <Button variant="info">EDIT</Button>
           </Link>
           <Button variant="danger" onClick={deleteThisMember} className="m-2">
@@ -38,7 +38,7 @@ MemberCard.propTypes = {
     player_name: PropTypes.string,
     class: PropTypes.string,
     spec: PropTypes.string,
-    firebaseKey: PropTypes.string.isRequired,
+    firebaseKey: PropTypes.string,
   }),
   onUpdate: PropTypes.func.isRequired,
 };
